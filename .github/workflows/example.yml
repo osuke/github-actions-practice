@@ -1,9 +1,10 @@
 name: example
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [labeled]
 jobs:
   first_job:
+    if: contains(github.event.pull_request.labels.*.name, 'trigger')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
