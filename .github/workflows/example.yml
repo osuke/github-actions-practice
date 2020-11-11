@@ -25,7 +25,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Show action name
         run: |
-          echo ${{ needs.check_action.outputs.action_name }}
+          if [ ${{ needs.check_action.outputs.action_name }} = 'labeled' ]; then
+            echo "This workflow was triggered by 'labeled'"
+          else
+            echo "This workflow was triggered by 'synchronize'"
+          fi
 
   cleanup-runs:
     runs-on: ubuntu-latest
