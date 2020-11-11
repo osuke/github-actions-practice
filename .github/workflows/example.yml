@@ -12,4 +12,4 @@ jobs:
         id: do-something
         run: echo "::set-output name=hoge::piyo"
       - name: Do something02
-        run: echo ${{ steps.do-something.hoge }}
+        run: echo "${{ steps.do-something.hoge }}"
