@@ -3,33 +3,29 @@ on:
   pull_request:
     types:
       - labeled
-      - synchronize # default
+      - synchronize
 jobs:
-  labeled_job:
-    if: contains(github.event.pull_request.labels.*.name, 'trigger')
+  check_action:
+    runs-on: ubuntu-latest
+    outputs:
+      action_name: ${{ steps.define_type.outputs.action_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Define type
+        id: define_type
+        run: |
+          echo "::set-output name=action_name::${{ github.event.action }}"
+
+  main:
+    needs: [check_action]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Do something
-        id: do-something
+      - name: Show action name
         run: |
-          echo "::set-output name=hoge::piyo"
-          echo ${{ github.event.action }}
-      - name: Do something02
-        run: echo ${{ steps.do-something.outputs.hoge }}
-
-  # synchronize_job:
-  #   if: contains(github.event.pull_request.labels.*.name, 'trigger')
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Do something
-  #       id: do-something
-  #       run: echo "::set-output name=hoge::piyo"
-  #     - name: Do something02
-  #       run: echo ${{ steps.do-something.outputs.hoge }}
+          echo ${{ needs.check_action.outputs.action_name }}
 
   cleanup-runs:
     runs-on: ubuntu-latest
