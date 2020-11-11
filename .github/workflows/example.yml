@@ -15,8 +15,9 @@ jobs:
         id: do-something
         run: |
           echo "::set-output name=hoge::piyo"
-          echo ${{ github.event_name }}
-          echo ${{ github.event_path }}
+          echo ${{ github.event_name.types }}
+          echo ${{ github.event.types }}
+          github.event_path
       - name: Do something02
         run: echo ${{ steps.do-something.outputs.hoge }}
 
