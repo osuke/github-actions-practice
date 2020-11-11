@@ -9,4 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Do something
-        run: echo "hello"
+        id: do-something
+        run: echo "::set-output name=hoge::piyo"
+      - name: Do something02
+        run: echo ${{ steps.do-something.hoge }}
