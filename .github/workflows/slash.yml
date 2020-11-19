@@ -1,0 +1,22 @@
+name: Slash Command
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  slashCommandDispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: xt0rted/pull-request-comment-branch@v1.2.0
+        id: comment_branch
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Slash command dispatch
+        uses: peter-evans/slash-command-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          commands: |
+            fruit
+          dispatch-type: workflow
+          static-args: |
+            ref=${{ steps.comment_branch.outputs.head_ref }}
