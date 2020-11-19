@@ -18,5 +18,3 @@ jobs:
           commands: |
             fruit
           dispatch-type: workflow
-          static-args: |
-            ref=${{ steps.comment_branch.outputs.head_ref }}
