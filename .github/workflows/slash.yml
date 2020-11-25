@@ -15,5 +15,6 @@ jobs:
           dispatch-type: workflow
       - name: Echo something
         run: |
+          echo "${{ github.event.issue.pull_request }}"
           echo "${{ github.event.repository.full_name }}#${{ github.event.issue.number }}"
 
