@@ -4,7 +4,21 @@ on:
     types:
       - labeled
       - synchronize
+
 jobs:
+  test_sed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: test
+        env:
+          ENV: CI
+        run: |
+          sed -i'' 's/env=dev/'env="${ENV}"'/' config
+          cat config
+
+
   check_action:
     runs-on: ubuntu-latest
     outputs:
