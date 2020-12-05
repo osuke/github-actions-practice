@@ -12,4 +12,7 @@ jobs:
         id: get_hoge
         run: |
           hoge=$(cat config.json | jq .hoge)
-          echo $hoge
+          echo "::set-output name=hoge::$hoge"
+      - name: echo_value
+        run: |
+          echo ${{ steps.get_hoge.outputs.hoge }}
