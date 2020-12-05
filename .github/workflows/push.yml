@@ -3,13 +3,16 @@ on:
   [push]
 
 jobs:
-  test_jq:
+  get_config:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: test
-        env:
-          CONFIG: $(cat config.json | jq .hoge)
+      - name: get_hoge
+        id: get_hoge
         run: |
-          echo $CONFIG
+          hoge=$(cat config.json | jq .hoge)
+          echo "::set-output name=hoge::${{ hoge }}"
+      - name: echo_value
+        run: |
+          echo ${{ steps.get_hoge.outputs.hoge }}
