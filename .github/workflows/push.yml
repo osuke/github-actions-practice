@@ -11,6 +11,7 @@ jobs:
       - name: get_hoge
         id: get_hoge
         run: |
+          date
           hoge=$(cat config.json | jq .hoge)
           echo "::set-output name=hoge::$hoge"
       - name: echo_value
